@@ -1,52 +1,52 @@
-// Uncomment this line to use CSS modules
-// import styles from './app.module.scss';
-import NxWelcome from './nx-welcome';
-
-import { Route, Routes, Link } from 'react-router-dom';
+import { Route, Routes, Navigate, NavLink, useLocation } from 'react-router-dom'
+import Login from '../pages/Login'
+import Staffing from '../pages/Staffing'
+import TrainingCenters from '../pages/TrainingCenters'
+import './app.module.scss'
+import 'bootstrap/dist/css/bootstrap.min.css'
 
 export function App() {
-  return (
-    <div>
-      <NxWelcome title="@org/tables" />
+  const location = useLocation()
 
-      {/* START: routes */}
-      {/* These routes and navigation have been generated for you */}
-      {/* Feel free to move and update them to fit your needs */}
-      <br />
-      <hr />
-      <br />
-      <div role="navigation">
-        <ul>
-          <li>
-            <Link to="/">Home</Link>
-          </li>
-          <li>
-            <Link to="/page-2">Page 2</Link>
-          </li>
-        </ul>
-      </div>
+  return (
+    <>
+      {
+        location.pathname === '/' ? null :
+          <ul className="nav nav-underline mx-3 mb-3">
+            <li className="nav-item">
+              <NavLink className="nav-link" to="/staffing">Staffing</NavLink>
+            </li>
+            <li className="nav-item">
+              <NavLink className="nav-link" to="/training">Training Centers</NavLink>
+            </li>
+            <li className="nav-item">
+              <NavLink className="nav-link" to="/logout">Logout</NavLink>
+            </li>
+          </ul>
+      }
       <Routes>
         <Route
           path="/"
           element={
-            <div>
-              This is the generated root route.{' '}
-              <Link to="/page-2">Click here for page 2.</Link>
-            </div>
+            <Login></Login>
           }
         />
         <Route
-          path="/page-2"
+          path="/staffing"
           element={
-            <div>
-              <Link to="/">Click here to go back to root page.</Link>
-            </div>
+            <Staffing></Staffing>
           }
         />
+        <Route
+          path="/training"
+          element={
+            <TrainingCenters></TrainingCenters>
+          }
+        />
+        <Route path="*" element={ <Navigate to="/" replace /> } />
       </Routes>
-      {/* END: routes */}
-    </div>
-  );
+    </>
+  )
 }
 
-export default App;
+export default App
